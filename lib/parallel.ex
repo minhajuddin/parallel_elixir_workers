@@ -20,6 +20,11 @@ defmodule Parallel do
     wait(pids_and_refs)
   end
 
+  # used to signal that the process's work is done
+  def complete(receiver_pid, data) do
+    send(receiver_pid, {:done, self, data})
+  end
+
   defp wait([]), do: :ok
   defp wait(pids_and_refs) do
     # receive messages and reduce the pid and refs
